@@ -1,15 +1,24 @@
-package com.alfred.android.keyboard;
+package com.example.android.softkeyboard;
 
-public class Alfred {
+public class Bot {
 	private String name;
 	
-	public Alfred(String input_name){
-		name = name;
+	public Bot(String input_name){
+		name = input_name;
 	}
 	
 	public String request(String input_request){
-		String response= "";
-		
+		String response;
+		switch (input_request) {
+        case "Monday":
+        	response = "";
+            break;
+        case "Sunday":
+        	response = "";
+            break;
+        default:
+            response = "Unknown request, please try again";
+		}
 		return response;
 	}
 	public String getName(){

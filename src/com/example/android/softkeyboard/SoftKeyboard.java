@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.alfred.android.keyboard;
+package com.example.android.softkeyboard;
 
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
@@ -77,6 +77,8 @@ public class SoftKeyboard extends InputMethodService
     private String mWordSeparators;
     private String command;
     
+    private Bot bot;
+    
     /**
      * Main initialization of the input method component.  Be sure to call
      * to super class.
@@ -84,6 +86,7 @@ public class SoftKeyboard extends InputMethodService
     @Override public void onCreate() {
         super.onCreate();
         mWordSeparators = getResources().getString(R.string.word_separators);
+        bot = new Bot("Alfred");
     }
     
     /**
@@ -274,7 +277,8 @@ public class SoftKeyboard extends InputMethodService
         }
         else if(mComposing.length()==0 && newSelStart==0){
         	Log.w("Output", command);
-        	onText(command);
+        	if (command.split(" ")[0].equals(bot.getName()))
+        		onText(bot.request(command));
         }
         CharSequence currentText = ic.getExtractedText(new ExtractedTextRequest(), 0).text;
         command = currentText.toString();

@@ -14,8 +14,9 @@
  * the License.
  */
 
-package com.alfred.android.keyboard;
+package com.example.android.softkeyboard;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -238,7 +239,7 @@ public class CandidateView extends View {
         invalidate();
     }
     
-    public void setSuggestions(List<String> suggestions, boolean completions,
+    @SuppressLint("WrongCall") public void setSuggestions(List<String> suggestions, boolean completions,
             boolean typedWordValid) {
         clear();
         if (suggestions != null) {
@@ -306,7 +307,7 @@ public class CandidateView extends View {
      * gesture.
      * @param x
      */
-    public void takeSuggestionAt(float x) {
+    @SuppressLint("WrongCall") public void takeSuggestionAt(float x) {
         mTouchX = (int) x;
         // To detect candidate
         onDraw(null);

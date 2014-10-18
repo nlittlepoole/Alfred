@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.alfred.android.keyboard;
+package com.example.android.softkeyboard;
 
 import com.example.android.softkeyboard.R;
 
