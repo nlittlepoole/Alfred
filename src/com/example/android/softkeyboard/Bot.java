@@ -17,10 +17,11 @@ public class Bot {
 	
 	public String request(String input_request){
 		int split =  input_request.indexOf(" me ") > 0? (input_request.indexOf(" me ") + 4) : 0;
-		String action = input_request.substring(0,split).toLowerCase();
-		String params = input_request.substring(split).toLowerCase();
+		String action = input_request.substring(0,split).toLowerCase().trim();
+		String params = input_request.substring(split).toLowerCase().trim();
+		Log.w("Routing", action);
 		String response;
-		switch (input_request) {
+		switch (action) {
         case "show me":
         	
         	response = "show me";
