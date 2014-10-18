@@ -12,6 +12,9 @@ public class Alfred {
 		
 		return response;
 	}
+	public String getName(){
+		return name;
+	}
 
 	private static String shortenURL(String input_url){
 		/**
