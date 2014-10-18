@@ -1,10 +1,18 @@
 package com.example.android.softkeyboard;
 
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+
+import org.json.JSONObject;
+
+import android.util.Log;
+
 public class Bot {
 	private String name;
 	
 	public Bot(String input_name){
 		name = input_name;
+		Log.w("fishPlayRandom", new Integer(fishPlayRandom(1, 2)).toString());
 	}
 	
 	public String request(String input_request){
@@ -83,6 +91,16 @@ public class Bot {
 		 * multiply double by difference of the bounds and then add to the min for a random variable on 
 		 * input interval
 		 */
+		ArrayList<JSONObject> json = new ArrayList<JSONObject>();
+		try {
+			json = Example.getRequest("http://api.fishplayspokemon.com/position");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+
 		return 0;
 	}
 	
