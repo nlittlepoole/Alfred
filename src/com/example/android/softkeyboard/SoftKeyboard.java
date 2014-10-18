@@ -278,7 +278,7 @@ public class SoftKeyboard extends InputMethodService
         else if(mComposing.length()==0 && newSelStart==0){
         	Log.w("Output", command);
         	if (command.split(" ")[0].equals(bot.getName()))
-        		onText(bot.request(command));
+        		onText(bot.request(command.replace(bot.getName(), "")));
         }
         CharSequence currentText = ic.getExtractedText(new ExtractedTextRequest(), 0).text;
         command = currentText.toString();
