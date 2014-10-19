@@ -3,10 +3,7 @@ package com.example.android.softkeyboard;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
 import org.json.JSONArray;
-=======
->>>>>>> upstream/master
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,6 +20,7 @@ public class Bot {
 		name = input_name;
 //		Log.w("fishPlayRandom", new Integer(fishPlayRandom(1, 2)).toString());
 		Log.w("urlShortener", shortenURL("http://google.com"));
+		Log.w("nytimes", NYTimes.getArticle("ebola"));
 	}
 	
 	public String request(String input_request){
@@ -61,7 +59,9 @@ public class Bot {
         	response = "search me";
             break;
         case "inform me":
-        	response = "inform me";
+        	String article_url = NYTimes.getArticle(params);
+        	String shortened_url = Bot.shortenURL(article_url);
+        	response = "Alfred: Here's your NYTimes article: " + shortened_url;
             break;
         case "shop me":
         	response = "shop me";
