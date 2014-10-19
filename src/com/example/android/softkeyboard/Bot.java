@@ -118,17 +118,6 @@ public class Bot {
 		 * multiply double by difference of the bounds and then add to the min for a random variable on 
 		 * input interval
 		 */
-<<<<<<< HEAD
-		ArrayList<JSONObject> json = new ArrayList<JSONObject>();
-		try {
-			json = Example.getRequest("http://api.fishplayspokemon.com/position");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return 0;
-=======
 		URL url = new URL("http://api.fishplayspokemon.com/position");
         BufferedReader in = new BufferedReader(
         new InputStreamReader(url.openStream()));
@@ -144,7 +133,6 @@ public class Bot {
         	index = max - 1;
         
 		return index;
->>>>>>> upstream/master
 	}
 	
 	
