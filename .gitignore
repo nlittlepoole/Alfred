@@ -1,6 +1,7 @@
  built application files
 *.apk
 *.ap_
+*.metadata
 
 # files for the dex VM
 *.dex
@@ -16,3 +17,4 @@ gen/
 local.properties
 
 *.idea
+project.properties

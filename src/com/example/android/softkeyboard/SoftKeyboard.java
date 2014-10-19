@@ -19,6 +19,7 @@ package com.example.android.softkeyboard;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
+import android.os.AsyncTask;
 import android.text.method.MetaKeyKeyListener;
 import android.util.Log;
 import android.view.KeyCharacterMap;
@@ -278,7 +279,8 @@ public class SoftKeyboard extends InputMethodService
         else if(mComposing.length()==0 && newSelStart==0){
         	Log.w("Output", command);
         	if (command.split(" ")[0].equals(bot.getName()))
-        		onText(bot.request(command));
+        		new request().execute(command.replace(bot.getName(), ""));
+        		
         }
         CharSequence currentText = ic.getExtractedText(new ExtractedTextRequest(), 0).text;
         command = currentText.toString();
@@ -696,5 +698,25 @@ public class SoftKeyboard extends InputMethodService
     }
     
     public void onRelease(int primaryCode) {
+    }
+    private class request extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            return bot.request(params[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+        	onText(result);
+            // might want to change "executed" for the returned string passed
+            // into onPostExecute() but that is upto you
+        }
+
+        @Override
+        protected void onPreExecute() {}
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
     }
 }
