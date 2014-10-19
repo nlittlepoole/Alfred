@@ -36,7 +36,7 @@ public class Bot {
             break;
         case "animate me":
         	String gif_url = Giphy.getGif(params);
-        	response = "Alfred: Here's your Gif " + Bot.shortenURL(gif_url);
+        	response = !gif_url.equals("")? "Alfred: Here's your Gif " + Bot.shortenURL(gif_url) : "Alfred: I can't find a gif";
             break;
         case "calculate me":
         	response = "calculate me";
@@ -61,8 +61,7 @@ public class Bot {
             break;
         case "inform me":
         	String article_url = NYTimes.getArticle(params);
-        	String shortened_url = Bot.shortenURL(article_url);
-        	response = "Alfred: Here's your NYTimes article: " + shortened_url;
+        	response = !article_url.equals("") ? "Alfred: Here's your NYTimes article: " + Bot.shortenURL(article_url) : "Alfred: I don't have any info on this";
             break;
         case "shop me":
         	response = "shop me";

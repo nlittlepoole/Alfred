@@ -37,7 +37,9 @@ public class NYTimes {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return output_url;
+        finally{
+            return output_url;
+        }
     }
 
 }

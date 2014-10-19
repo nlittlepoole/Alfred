@@ -25,7 +25,7 @@ public class Giphy {
         ServiceHandler http = new ServiceHandler();
         String json_object;
         json_object = http.makeCall(request_url, ServiceHandler.GET);
-        String output_url = "No gifs found";
+        String output_url = "";
         try {
             JSONObject jsonObj = new JSONObject(json_object);
             JSONArray data = jsonObj.getJSONArray("data");
