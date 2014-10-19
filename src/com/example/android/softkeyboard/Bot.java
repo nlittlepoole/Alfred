@@ -64,7 +64,8 @@ public class Bot {
         	response = !article_url.equals("") ? "Alfred: Here's your NYTimes article: " + Bot.shortenURL(article_url) : "Alfred: I don't have any info on this";
             break;
         case "shop me":
-        	response = "shop me";
+            String listing_url = EtsyAPI.getListing(params);
+            response = !listing_url.equals("") ? "Alfred: Here's your Etsy listing: " + Bot.shortenURL(listing_url) : "Alfred: I don't have any info on this";
             break;
         case "clarify me":
         	response = "clarify me";
@@ -72,8 +73,8 @@ public class Bot {
         case "define me":
         	response =  "Alfred: " +Urban.define(params);
             break;
-        case "reccomend me":
-        	response = "reccomend me";
+        case "recommend me":
+        	response = "recommend me";
             break;
         case "schedule me":
         	response = "schedule me";
