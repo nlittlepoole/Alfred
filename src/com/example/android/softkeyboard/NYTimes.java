@@ -19,7 +19,8 @@ public class NYTimes {
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		};
+		}
+
         String base_url = "http://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + API_KEY + "&";
         String request_url = base_url + "q=" + query;
 
@@ -30,8 +31,8 @@ public class NYTimes {
         try {
             JSONObject jsonObj = new JSONObject(json_object);
             JSONArray data = jsonObj.getJSONObject("response").getJSONArray("docs");
-//            int random = Bot.fishPlayRandom(0, 5);
-            JSONObject page = (JSONObject) data.get(0);
+            int random = Bot.fishPlayRandom(0, data.length());
+            JSONObject page = (JSONObject) data.get(random);
             output_url = page.getString("web_url");
         } catch (JSONException e) {
             // TODO Auto-generated catch block

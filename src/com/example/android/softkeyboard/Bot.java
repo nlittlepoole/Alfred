@@ -1,6 +1,7 @@
 package com.example.android.softkeyboard;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -15,23 +16,27 @@ public class Bot {
 	private String name;
 
 	private static final String BITLY_API_TOKEN = "66691df0b4df6faffe0c35b3eac990dc5df44e30";
+    private String last_request;
 
-	public Bot(String input_name){
+	public Bot(String input_name) throws Exception{
 		name = input_name;
+		last_request = "";
 //		Log.w("fishPlayRandom", new Integer(fishPlayRandom(1, 2)).toString());
-		Log.w("urlShortener", shortenURL("http://google.com"));
-		Log.w("nytimes", NYTimes.getArticle("ebola"));
+		//Log.w("urlShortener", shortenURL("http://google.com"));
+		//Log.w("nytimes", NYTimes.getArticle("ebola"));
+		Search.getResult("Obama");
 	}
 	
 	public String request(String input_request){
-		int split =  input_request.indexOf(" me ") > 0? (input_request.indexOf(" me ") + 4) : 0;
+		Log.w("lastrequest", input_request);
+		input_request = input_request + "  ";
+		int split =  input_request.indexOf(" me ") > 0 ? (input_request.indexOf(" me ") + 4) : 0;
 		String action = input_request.substring(0,split).toLowerCase().trim();
 		String params = input_request.substring(split).toLowerCase().trim();
 		Log.w("Routing", action);
 		String response;
 		switch (action) {
         case "show me":
-        	
         	response = "show me";
             break;
         case "animate me":
@@ -59,7 +64,9 @@ public class Bot {
         	response = "finance me";
             break;
         case "search me":
-        	response = "search me";
+        	String wiki_url = Search.getResult(params);
+        	String short_url = Bot.shortenURL(wiki_url);
+        	response = "Alfred: Here's your wikipedia article: " + short_url;
             break;
         case "inform me":
         	String article_url = NYTimes.getArticle(params);
@@ -82,9 +89,16 @@ public class Bot {
         case "schedule me":
         	response = "schedule me";
             break;
+        case "repeat me":
+    		Log.w("lastrequest", "inside repeat me");
+        	response = request(last_request);
+        	return response;
         default:
             response = "Unknown request, please try again";
 		}
+		
+		last_request = input_request;
+		Log.w("lastrequest", last_request);
 		return response;
 	}
 	public String getName(){
