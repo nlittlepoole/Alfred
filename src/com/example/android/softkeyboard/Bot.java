@@ -3,16 +3,24 @@ package com.example.android.softkeyboard;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
+import java.net.*;
+import java.io.*;
 
 public class Bot {
 	private String name;
-	
+
+	private static final String BITLY_API_TOKEN = "66691df0b4df6faffe0c35b3eac990dc5df44e30";
+
 	public Bot(String input_name){
 		name = input_name;
-		Log.w("fishPlayRandom", new Integer(fishPlayRandom(1, 2)).toString());
+//		Log.w("fishPlayRandom", new Integer(fishPlayRandom(1, 2)).toString());
+		Log.w("urlShortener", shortenURL("http://google.com"));
+		Log.w("nytimes", NYTimes.getArticle("ebola"));
 	}
 	
 	public String request(String input_request){
@@ -51,7 +59,9 @@ public class Bot {
         	response = "search me";
             break;
         case "inform me":
-        	response = "inform me";
+        	String article_url = NYTimes.getArticle(params);
+        	String shortened_url = Bot.shortenURL(article_url);
+        	response = "Alfred: Here's your NYTimes article: " + shortened_url;
             break;
         case "shop me":
         	response = "shop me";
@@ -77,32 +87,52 @@ public class Bot {
 		return name;
 	}
 
-	private static String shortenURL(String input_url){
+	public static String shortenURL(String input_url){
 		/**
-		 * take in a url and shorten it using the bit.ly or google or whatever url shortening service
+		 * Take in a url and shorten it using the bit.ly or google or whatever url shortening service
 		 */
-		String ouput_url= "";
-		
-		return ouput_url;
+		String bitly_base = "https://api-ssl.bitly.com/v3/shorten?access_token=" + BITLY_API_TOKEN + "&";
+        String bitly_api_call = bitly_base + "longUrl=" + input_url;
+        ServiceHandler http = new ServiceHandler();
+        Log.w("urlShortener", "in shortenURL");
+//        ArrayList<JSONObject> result = new ArrayList<JSONObject>();
+        String json_object;
+        json_object = http.makeCall(bitly_api_call, ServiceHandler.GET);
+        Log.w("urlShortener", json_object);
+
+        String output_url = "";
+        try {
+            JSONObject jsonObj = new JSONObject(json_object);
+            JSONObject data = jsonObj.getJSONObject("data");
+            output_url = data.getString("url");
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return output_url;
 	}
 	
-	private static int fishPlayRandom(int min, int max){
+	private static int fishPlayRandom(int min, int max) throws Exception{
 		/**
 		 * Query fishPlayPokemon api to get position, then normalize to some double on interval [0,1]
 		 * multiply double by difference of the bounds and then add to the min for a random variable on 
 		 * input interval
 		 */
-		ArrayList<JSONObject> json = new ArrayList<JSONObject>();
-		try {
-			json = Example.getRequest("http://api.fishplayspokemon.com/position");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-
-		return 0;
+		URL url = new URL("http://api.fishplayspokemon.com/position");
+        BufferedReader in = new BufferedReader(
+        new InputStreamReader(url.openStream()));
+        String jsonString = in.readLine();
+        in.close();
+        jsonString.replaceAll("\n","\\n");
+        JSONObject json = new JSONObject(jsonString);
+        double x = json.getDouble("x");
+        double y = json.getDouble("y");
+        double value = 1 - Math.exp(-Math.abs((x/(x+y)-y/(x+y))));
+        int index = (int) ((max - min) * value) + min;
+        if(index == max)
+        	index = max - 1;
+        
+		return index;
 	}
 	
 	
