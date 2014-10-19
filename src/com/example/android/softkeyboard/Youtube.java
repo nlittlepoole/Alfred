@@ -10,7 +10,7 @@ import org.json.JSONObject;
 public class Youtube {
 	public static String getVideo(String query) {
 
-        String base_url = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoCategoryId=10&key=AIzaSyD6n8PSpkuyhPQmJ6EwNH8XggGVU9EqyZI&q=";
+        String base_url = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoCategoryId=10&key=AIzaSyBCXVXUOcD8eYWwijCmxdDhlf5qiRBOfdY&q=";
         try {
 			query = URLEncoder.encode(query, "utf-8");
 		} catch (UnsupportedEncodingException e1) {

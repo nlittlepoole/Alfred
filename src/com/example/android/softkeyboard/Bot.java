@@ -80,6 +80,10 @@ public class Bot {
             String youtube_url = Youtube.getVideo(params);
             response = !youtube_url.equals("") ? "Alfred: Please enjoy  https://www.youtube.com/watch?v=" + youtube_url : "Alfred: Sorry I can't play this";
             break;
+        case "pin me":
+            String pin = Map.pin();
+            response = !pin.equals("") ? "Alfred: " + pin : "Alfred: Sorry I don't know where you are";
+            break;
         case "clarify me":
         	response = "clarify me";
             break;
