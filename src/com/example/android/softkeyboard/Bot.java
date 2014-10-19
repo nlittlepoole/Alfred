@@ -37,7 +37,7 @@ public class Bot {
 		switch (action) {
         case "show me":
         	String imgurURL = Image.getImage(params);
-        	response = "Alfred: Here's your imgur link: " + imgurURL;
+        	response = !imgurURL.equals("") ? "Alfred: Here's your imgur link: " + imgurURL : "Alfred: I can't find a picture";
             break;
         case "animate me":
         	String gif_url = Giphy.getGif(params);
@@ -66,7 +66,7 @@ public class Bot {
         case "search me":
         	String wiki_url = Search.getResult(params);
         	String short_url = Bot.shortenURL(wiki_url);
-        	response = "Alfred: Here's your wikipedia article: " + short_url;
+        	response = !wiki_url.equals("") ? "Alfred: Here's your wikipedia article: " + short_url : "Alfred: I can't find anything on that";
             break;
         case "inform me":
         	String article_url = NYTimes.getArticle(params);
