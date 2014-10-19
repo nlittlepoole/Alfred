@@ -71,7 +71,7 @@ public class Bot {
         	response = "clarify me";
             break;
         case "define me":
-        	response = "define me";
+        	response =  "Alfred: " +Urban.define(params);
             break;
         case "reccomend me":
         	response = "reccomend me";
