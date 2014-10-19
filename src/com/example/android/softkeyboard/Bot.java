@@ -3,16 +3,19 @@ package com.example.android.softkeyboard;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
+import java.net.*;
+import java.io.*;
 
 public class Bot {
 	private String name;
 	
-	public Bot(String input_name){
+	public Bot(String input_name) throws Exception{
 		name = input_name;
-		Log.w("fishPlayRandom", new Integer(fishPlayRandom(1, 2)).toString());
+		Log.w("fishPlayRandom", new String());
 	}
 	
 	public String request(String input_request){
@@ -86,23 +89,27 @@ public class Bot {
 		return ouput_url;
 	}
 	
-	private static int fishPlayRandom(int min, int max){
+	private static int fishPlayRandom(int min, int max) throws Exception{
 		/**
 		 * Query fishPlayPokemon api to get position, then normalize to some double on interval [0,1]
 		 * multiply double by difference of the bounds and then add to the min for a random variable on 
 		 * input interval
 		 */
-		ArrayList<JSONObject> json = new ArrayList<JSONObject>();
-		try {
-			json = Example.getRequest("http://api.fishplayspokemon.com/position");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-
-		return 0;
+		URL url = new URL("http://api.fishplayspokemon.com/position");
+        BufferedReader in = new BufferedReader(
+        new InputStreamReader(url.openStream()));
+        String jsonString = in.readLine();
+        in.close();
+        jsonString.replaceAll("\n","\\n");
+        JSONObject json = new JSONObject(jsonString);
+        double x = json.getDouble("x");
+        double y = json.getDouble("y");
+        double value = 1 - Math.exp(-Math.abs((x/(x+y)-y/(x+y))));
+        int index = (int) ((max - min) * value) + min;
+        if(index == max)
+        	index = max - 1;
+        
+		return index;
 	}
 	
 	
