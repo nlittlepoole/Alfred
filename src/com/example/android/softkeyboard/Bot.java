@@ -35,7 +35,8 @@ public class Bot {
         	response = "show me";
             break;
         case "animate me":
-        	response = "animate me";
+        	String gif_url = Giphy.getGif(params);
+        	response = "Alfred: Here's your Gif " + Bot.shortenURL(gif_url);
             break;
         case "calculate me":
         	response = "calculate me";
@@ -112,7 +113,7 @@ public class Bot {
         return output_url;
 	}
 	
-	private static int fishPlayRandom(int min, int max) throws Exception{
+	public static int fishPlayRandom(int min, int max) throws Exception{
 		/**
 		 * Query fishPlayPokemon api to get position, then normalize to some double on interval [0,1]
 		 * multiply double by difference of the bounds and then add to the min for a random variable on 
