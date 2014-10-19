@@ -3,17 +3,12 @@ package com.example.android.softkeyboard;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-=======
-import org.json.JSONObject;
-
 import android.util.Log;
 
->>>>>>> upstream/master
 public class Bot {
 	private String name;
 	private static final String BITLY_API_TOKEN = "66691df0b4df6faffe0c35b3eac990dc5df44e30";
@@ -21,6 +16,7 @@ public class Bot {
 	public Bot(String input_name){
 		name = input_name;
 		Log.w("fishPlayRandom", new Integer(fishPlayRandom(1, 2)).toString());
+		Log.w("urlShortener", shortenURL("http://google.com"));
 	}
 	
 	public String request(String input_request){
@@ -89,12 +85,15 @@ public class Bot {
 		/**
 		 * Take in a url and shorten it using the bit.ly or google or whatever url shortening service
 		 */
-		String bitly_base = "http://api-ssl.bitly.com/v3/shorten?access_token=" + BITLY_API_TOKEN;
+		String bitly_base = "https://api-ssl.bitly.com/v3/shorten?access_token=" + BITLY_API_TOKEN + "&";
         String bitly_api_call = bitly_base + "longUrl=" + input_url;
         ServiceHandler http = new ServiceHandler();
-        ArrayList<JSONObject> result = new ArrayList<JSONObject>();
+        Log.w("urlShortener", "in shortenURL");
+//        ArrayList<JSONObject> result = new ArrayList<JSONObject>();
         String json_object;
         json_object = http.makeCall(bitly_api_call, ServiceHandler.GET);
+        Log.w("urlShortener", json_object);
+
         String output_url = "";
         try {
             JSONObject jsonObj = new JSONObject(json_object);
@@ -121,8 +120,6 @@ public class Bot {
 			e.printStackTrace();
 		}
 		
-		
-
 		return 0;
 	}
 	
