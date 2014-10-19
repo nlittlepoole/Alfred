@@ -76,6 +76,10 @@ public class Bot {
             String listing_url = EtsyAPI.getListing(params);
             response = !listing_url.equals("") ? "Alfred: Here's your Etsy listing: " + Bot.shortenURL(listing_url) : "Alfred: I don't have any info on this";
             break;
+        case "play me":
+            String youtube_url = Youtube.getVideo(params);
+            response = !youtube_url.equals("") ? "Alfred: Please enjoy  https://www.youtube.com/watch?v=" + youtube_url : "Alfred: Sorry I can't play this";
+            break;
         case "clarify me":
         	response = "clarify me";
             break;
