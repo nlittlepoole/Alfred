@@ -8,6 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.util.Log;
 import java.net.*;
 import java.io.*;
@@ -37,11 +39,11 @@ public class Bot {
 		switch (action) {
         case "show me":
         	String imgurURL = Image.getImage(params);
-        	response = !imgurURL.equals("") ? "Alfred: Here's your imgur link: " + imgurURL : "Alfred: I can't find a picture";
+        	response = !imgurURL.equals("") ? name + ": Here's your imgur link: " + imgurURL : name + ": I can't find a picture";
             break;
         case "animate me":
         	String gif_url = Giphy.getGif(params);
-        	response = !gif_url.equals("")? "Alfred: Here's your Gif " + Bot.shortenURL(gif_url) : "Alfred: I can't find a gif";
+        	response = !gif_url.equals("")? name + ": Here's your Gif " + Bot.shortenURL(gif_url) : name + ": I can't find a gif";
             break;
         case "calculate me":
         	response = "calculate me";
@@ -54,12 +56,12 @@ public class Bot {
             break;
         case "direct me":
         	String directions =  Map.direct(params);
-        	response = directions.length()>0 ?"Alfred: " + directions : "Alfred: I don't know how to get there";
+        	response = directions.length()>0 ?name + ": " + directions : name + ": I don't know how to get there";
 
         	break;
         case "weather me":
         	String weather =  Weather.getWeather();
-        	response = weather.length()>0 ?"Alfred: " + weather : "Alfred: I don't know the weather at your location";
+        	response = weather.length()>0 ?name + ": " + weather : name + ": I don't know the weather at your location";
 
             break;
         case "finance me":
@@ -68,33 +70,33 @@ public class Bot {
         case "search me":
         	String wiki_url = Search.getResult(params);
         	String short_url = Bot.shortenURL(wiki_url);
-        	response = !wiki_url.equals("") ? "Alfred: Here's your wikipedia article: " + short_url : "Alfred: I can't find anything on that";
+        	response = !wiki_url.equals("") ? name + ": Here's your wikipedia article: " + short_url : name + ": I can't find anything on that";
             break;
         case "inform me":
         	String article_url = NYTimes.getArticle(params);
-        	response = !article_url.equals("") ? "Alfred: Here's your NYTimes article: " + Bot.shortenURL(article_url) : "Alfred: I don't have any info on this";
+        	response = !article_url.equals("") ? name + ": Here's your NYTimes article: " + Bot.shortenURL(article_url) : name + ": I don't have any info on this";
             break;
         case "shop me":
             String listing_url = EtsyAPI.getListing(params);
-            response = !listing_url.equals("") ? "Alfred: Here's your Etsy listing: " + Bot.shortenURL(listing_url) : "Alfred: I don't have any info on this";
+            response = !listing_url.equals("") ? name + ": Here's your Etsy listing: " + Bot.shortenURL(listing_url) : name + ": I don't have any info on this";
             break;
         case "play me":
             String youtube_url = Youtube.getVideo(params);
-            response = !youtube_url.equals("") ? "Alfred: Please enjoy  https://www.youtube.com/watch?v=" + youtube_url : "Alfred: Sorry I can't play this";
+            response = !youtube_url.equals("") ? name + ": Please enjoy  https://www.youtube.com/watch?v=" + youtube_url : name + ": Sorry I can't play this";
             break;
         case "pin me":
             String pin = Map.pin();
-            response = !pin.equals("") ? "Alfred: " + pin : "Alfred: Sorry I don't know where you are";
+            response = !pin.equals("") ? name + ": " + pin : name + ": Sorry I don't know where you are";
             break;
         case "clarify me":
         	response = "clarify me";
             break;
         case "define me":
-        	response =  "Alfred: " +Urban.define(params);
+        	response =  name + ": " +Urban.define(params);
             break;
         case "recommend me":
         	String recommendation = Foursquare.getRecommendation(params);
-        	response =  recommendation.length()> 1 ? "Alfred: You should try " + recommendation : "Alfred: I have no suggestions";
+        	response =  recommendation.length()> 1 ? name + ": You should try " + recommendation : name + ": I have no suggestions";
             break;
         case "schedule me":
         	response = "schedule me";
@@ -103,6 +105,14 @@ public class Bot {
     		Log.w("lastrequest", "inside repeat me");
         	response = request(last_request);
         	return response;
+        case "rename me":
+        	SharedPreferences settings = LatinKeyboardView.mContext.getSharedPreferences(name + "", Activity.MODE_PRIVATE);
+        	SharedPreferences.Editor prefEditor = settings.edit();
+            prefEditor.putString("Name", params);
+            prefEditor.commit();
+            name= params;
+            response = "I am now " + name;
+            break;
         default:
             response = "Unknown request, please try again";
 		}

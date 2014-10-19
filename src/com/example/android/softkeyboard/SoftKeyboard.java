@@ -16,7 +16,10 @@
 
 package com.example.android.softkeyboard;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
@@ -84,6 +87,7 @@ public class SoftKeyboard extends InputMethodService
     
     private Bot bot;
     private HashMap<String,String[]> hashtags  = new HashMap<String, String[]>();
+    private Context context;
     /**
      * Main initialization of the input method component.  Be sure to call
      * to super class.
@@ -99,10 +103,19 @@ public class SoftKeyboard extends InputMethodService
         hashtags.put("im", new String[] {"inform me" });
         hashtags.put("wm", new String[] {"weather me" });
         
+        SharedPreferences settings = getSharedPreferences("Alfred", MODE_PRIVATE);
+        String name =  settings.getString("Name", null);
+        if(name==null){
+        	 SharedPreferences.Editor prefEditor = settings.edit();
+             prefEditor.putString("Name", "Alfred");
+             prefEditor.commit();
+             name = "Alfred";
+        }
+       Log.w("Name",name);
         
         
         try {
-			bot = new Bot("Alfred");
+			bot = new Bot(name);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -298,7 +311,7 @@ public class SoftKeyboard extends InputMethodService
         else if(mComposing.length()==0 && newSelStart==0){
         	Log.w("Output", command);
         	if (command.split(" ")[0].toLowerCase().equals(bot.getName()))
-        		new request().execute(command.replace(bot.getName(), ""));
+        		new request().execute(command.toLowerCase().replace(bot.getName(), ""));
         		
         }
         CharSequence currentText = ic.getExtractedText(new ExtractedTextRequest(), 0).text;
