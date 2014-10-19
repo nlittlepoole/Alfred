@@ -16,10 +16,12 @@
 
 package com.example.android.softkeyboard;
 
+import android.content.Intent;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.os.AsyncTask;
+import android.provider.CalendarContract.Events;
 import android.text.method.MetaKeyKeyListener;
 import android.util.Log;
 import android.view.KeyCharacterMap;
@@ -705,14 +707,59 @@ public class SoftKeyboard extends InputMethodService
     public void onRelease(int primaryCode) {
     }
     private class request extends AsyncTask<String, Void, String> {
-
+    	
+    	private String request;
+    	public void schedule(String query){
+    		query = " " + query + " ";
+    		int time_index = query.indexOf(" at ");
+    		int day_index = query.indexOf(" on  ");
+    		
+    		String title = query;
+    		String time;
+    		String day;
+    		
+    		if(time_index >-1 || day_index > -1){
+    			time_index = time_index<0 ? query.length()-1 : time_index;
+    			day_index = day_index<0 ? query.length()-1 : day_index;
+    			if (time_index < day_index){
+    				time = query.substring(time_index+2,day_index);
+    				title = query.substring(time_index);
+    			}
+    			else if (time_index < day_index){
+    				day = query.substring(day_index+2,time_index);
+    				title = query.substring(day_index);
+    			}
+    		}
+    		
+    		
+    		Intent calIntent = new Intent(Intent.ACTION_INSERT); 
+    		calIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    		calIntent.setType("vnd.android.cursor.item/event");    
+    		calIntent.putExtra(Events.TITLE, title); 
+    		 
+//    		GregorianCalendar calDate = new GregorianCalendar(2012, 7, 15);
+//    		calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, 
+//    		     calDate.getTimeInMillis()); 
+//    		calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, 
+//    		     calDate.getTimeInMillis()); 
+    		 
+    		LatinKeyboardView.mContext.startActivity(calIntent);
+    	}
+    	
         @Override
         protected String doInBackground(String... params) {
+        	request= params[0];
             return bot.request(params[0]);
         }
 
         @Override
         protected void onPostExecute(String result) {
+        	if (result.equals("schedule me")){
+        		schedule(request);
+        		result="Alfred: Event Scheduled";
+        		
+        	}
+        	
         	onText(result);
             // might want to change "executed" for the returned string passed
             // into onPostExecute() but that is upto you
