@@ -53,7 +53,9 @@ public class Bot {
         	response = "tell me";
             break;
         case "direct me":
-        	response = "direct me";
+        	String directions =  Map.direct(params);
+        	response = directions.length()>0 ?"Alfred: " + directions : "Alfred: I don't know how to get there";
+
         	break;
         case "weather me":
         	String weather =  Weather.getWeather();
