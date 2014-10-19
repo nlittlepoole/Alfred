@@ -34,6 +34,8 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import com.example.android.softkeyboard.R;
@@ -81,7 +83,7 @@ public class SoftKeyboard extends InputMethodService
     private String command;
     
     private Bot bot;
-    
+    private HashMap<String,String[]> hashtags  = new HashMap<String, String[]>();
     /**
      * Main initialization of the input method component.  Be sure to call
      * to super class.
@@ -89,6 +91,16 @@ public class SoftKeyboard extends InputMethodService
     @Override public void onCreate() {
         super.onCreate();
         mWordSeparators = getResources().getString(R.string.word_separators);
+        hashtags.put("am", new String[] {"animate me","answer me" });
+        hashtags.put("rm", new String[] {"repeat me","recommend me" });
+        hashtags.put("pm", new String[] {"play me","pin me" });
+        hashtags.put("dm", new String[] {"define me", "direct me" });
+        hashtags.put("sm", new String[] {"search me","show me","schedule me" ,"shop me"});
+        hashtags.put("im", new String[] {"inform me" });
+        hashtags.put("wm", new String[] {"weather me" });
+        
+        
+        
         try {
 			bot = new Bot("Alfred");
 		} catch (Exception e) {
@@ -564,7 +576,13 @@ public class SoftKeyboard extends InputMethodService
         if (!mCompletionOn) {
             if (mComposing.length() > 0) {
                 ArrayList<String> list = new ArrayList<String>();
-                list.add(mComposing.toString());
+                Log.w("Output", mComposing.toString() + hashtags.containsKey(mComposing.toString()));
+                if(hashtags.containsKey(mComposing.toString())){
+                	list.addAll(Arrays.asList(hashtags.get(mComposing.toString())));
+                }
+                if(mComposing.length()==0){
+                	list.add(bot.getName());
+                }
                 setSuggestions(list, true, true);
             } else {
                 setSuggestions(null, false, false);
