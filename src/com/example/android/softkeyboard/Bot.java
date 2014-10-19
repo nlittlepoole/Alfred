@@ -22,7 +22,6 @@ public class Bot {
 //		Log.w("fishPlayRandom", new Integer(fishPlayRandom(1, 2)).toString());
 		//Log.w("urlShortener", shortenURL("http://google.com"));
 		//Log.w("nytimes", NYTimes.getArticle("ebola"));
-		Search.getResult("Obama");
 	}
 	
 	public String request(String input_request){
@@ -33,8 +32,8 @@ public class Bot {
 		String response;
 		switch (action) {
         case "show me":
-        	
-        	response = "show me";
+        	String imgurURL = Image.getImage(params);
+        	response = "Alfred: Here's your imgur link: " + imgurURL;
             break;
         case "animate me":
         	String gif_url = Giphy.getGif(params);
