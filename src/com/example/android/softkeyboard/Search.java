@@ -36,7 +36,7 @@ public class Search {
 	        result_url = "http://en.wikipedia.org/wiki?curid=" + pageid;
 		}
 		catch(Exception e){
-			
+			e.printStackTrace();
 		}
 		finally{
 			return result_url;
