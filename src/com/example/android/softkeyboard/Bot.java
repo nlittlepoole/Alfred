@@ -19,7 +19,7 @@ public class Bot {
     private String last_request;
 
 	public Bot(String input_name) throws Exception{
-		name = input_name;
+		name = input_name.toLowerCase();
 		last_request = "";
 		//Log.w("fishPlayRandom", new Integer(fishPlayRandom(1, 2)).toString());
 		//Log.w("urlShortener", shortenURL("http://google.com"));
