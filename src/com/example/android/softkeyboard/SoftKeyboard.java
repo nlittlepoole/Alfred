@@ -297,7 +297,7 @@ public class SoftKeyboard extends InputMethodService
         }
         else if(mComposing.length()==0 && newSelStart==0){
         	Log.w("Output", command);
-        	if (command.split(" ")[0].equals(bot.getName()))
+        	if (command.split(" ")[0].toLowerCase().equals(bot.getName()))
         		new request().execute(command.replace(bot.getName(), ""));
         		
         }
