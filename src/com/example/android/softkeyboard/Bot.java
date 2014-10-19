@@ -66,7 +66,7 @@ public class Bot {
         	response = "reccomend me";
             break;
         case "schedule me":
-        	response = "reccomend me";
+        	response = "schedule me";
             break;
         default:
             response = "Unknown request, please try again";

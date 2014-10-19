@@ -23,11 +23,12 @@ import android.inputmethodservice.Keyboard.Key;
 import android.util.AttributeSet;
 
 public class LatinKeyboardView extends KeyboardView {
-
+	public static Context mContext;
     static final int KEYCODE_OPTIONS = -100;
 
     public LatinKeyboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mContext= context;
     }
 
     public LatinKeyboardView(Context context, AttributeSet attrs, int defStyle) {
