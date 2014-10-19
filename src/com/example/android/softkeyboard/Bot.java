@@ -16,6 +16,7 @@ public class Bot {
 	private String name;
 
 	private static final String BITLY_API_TOKEN = "66691df0b4df6faffe0c35b3eac990dc5df44e30";
+    private String last_request;
 
 	public Bot(String input_name) throws Exception{
 		name = input_name;
