@@ -65,7 +65,7 @@ public class ServiceHandler {
                     url += "?" + paramString;
                 }
                 HttpGet httpGet = new HttpGet(url);
- 
+                httpGet.addHeader("Referer", "http://api.go-vibe.com");
                 httpResponse = httpClient.execute(httpGet);
  
             }
