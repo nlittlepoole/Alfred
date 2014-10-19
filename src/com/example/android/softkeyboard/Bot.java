@@ -21,7 +21,7 @@ public class Bot {
 	public Bot(String input_name) throws Exception{
 		name = input_name;
 		last_request = "";
-//		Log.w("fishPlayRandom", new Integer(fishPlayRandom(1, 2)).toString());
+		//Log.w("fishPlayRandom", new Integer(fishPlayRandom(1, 2)).toString());
 		//Log.w("urlShortener", shortenURL("http://google.com"));
 		//Log.w("nytimes", NYTimes.getArticle("ebola"));
 	}

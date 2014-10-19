@@ -64,7 +64,7 @@ public class SoftKeyboard extends InputMethodService
     private CompletionInfo[] mCompletions;
     
     private StringBuilder mComposing = new StringBuilder();
-    private boolean mPredictionOn;
+	private boolean mPredictionOn;
     private boolean mCompletionOn;
     private int mLastDisplayWidth;
     private boolean mCapsLock;
