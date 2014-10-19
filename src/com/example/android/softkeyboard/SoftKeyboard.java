@@ -751,7 +751,7 @@ public class SoftKeyboard extends InputMethodService
         protected void onPostExecute(String result) {
         	if (result.equals("schedule me")){
         		schedule(request);
-        		result="Event Scheduled";
+        		result="Alfred: Event Scheduled";
         		
         	}
         	
