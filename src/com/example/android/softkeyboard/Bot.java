@@ -76,7 +76,8 @@ public class Bot {
         	response =  "Alfred: " +Urban.define(params);
             break;
         case "recommend me":
-        	response =  "Alfred: You should try " +Foursquare.getRecommendation(params);
+        	String recommendation = Foursquare.getRecommendation(params);
+        	response =  recommendation.length()> 1 ? "Alfred: You should try " + recommendation : "Alfred: I have no suggestions";
             break;
         case "schedule me":
         	response = "schedule me";
