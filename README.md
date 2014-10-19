@@ -1,16 +1,6 @@
 # Alfred
 Alfred is an Android keyboard assistant that performs various functions for you. To use Alfred, you need to switch your input method to the Alfred keyboard. After doing that, you can use Alfred in the following manner:
 
-> You: Alfred inform me ebola # Alfred finds you a NYTimes article about Ebola
-
-
-> You: Alfred: Here's your NYTimes article: (nytimes article)
-
-
-> Friend: Alfred weather me
-
-
-> Friend: Alfred:  
 
 ## Customizing Alfred
 Adding features to Alfred is quite simple. Here's how to do it:
