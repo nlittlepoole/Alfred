@@ -49,9 +49,11 @@ public class Bot {
             break;
         case "direct me":
         	response = "direct me";
-            break;
+        	break;
         case "weather me":
-        	response = "weather me";
+        	String weather =  Weather.getWeather();
+        	response = weather.length()>0 ?"Alfred: " + weather : "Alfred: I don't know the weather at your location";
+
             break;
         case "finance me":
         	response = "finance me";
